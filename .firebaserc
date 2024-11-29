@@ -1,0 +1,8 @@
+{
+  "projects": {
+    "default": "d2r-item-calc",
+    "staging": "d2r-item-calc"
+  },
+  "targets": {},
+  "etags": {}
+}
