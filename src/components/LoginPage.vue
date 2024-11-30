@@ -42,7 +42,7 @@
                 block
                 class="mb-4"
               >
-                Login
+                Login!!
               </v-btn>
               <v-btn
                 color="primary"
@@ -52,7 +52,7 @@
                 block
               >
                 <span style="white-space: normal">
-                  Don't have an account? Register here.
+                  Don't have an account? Register here!
                 </span>
               </v-btn>
               <v-btn block color="grey-darken-1" @click="$router.push('/')">
