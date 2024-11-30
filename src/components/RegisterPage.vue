@@ -50,7 +50,7 @@
                 block
                 class="mb-4"
               >
-                Register!
+                Register.
               </v-btn>
 
               <!-- Login redirection button -->
@@ -62,7 +62,7 @@
                 block
               >
                 <span style="white-space: normal"
-                  >Already have an account? Login here!</span
+                  >Already have an account? Login here.</span
                 >
               </v-btn>
               <v-btn block color="grey-darken-1" @click="$router.push('/')">
