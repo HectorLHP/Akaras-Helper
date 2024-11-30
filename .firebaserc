@@ -1,6 +1,6 @@
 {
   "projects": {
-    "default": "d2r-item-calc",
+    "default": "akaras-helper",
     "staging": "d2r-item-calc"
   },
   "targets": {},
