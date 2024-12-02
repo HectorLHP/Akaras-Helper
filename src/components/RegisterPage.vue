@@ -21,7 +21,7 @@
                 v-model="email"
                 label="Email"
                 type="email"
-                :rules="[emailRules]"
+                :rules="emailRules"
                 required
                 variant="solo"
                 clearable
@@ -33,7 +33,7 @@
                 v-model="password"
                 label="Password"
                 type="password"
-                :rules="[passwordRules]"
+                :rules="passwordRules"
                 required
                 variant="solo"
                 clearable
@@ -65,19 +65,23 @@
                   >Already have an account? Login here.</span
                 >
               </v-btn>
-              <v-btn block color="grey-darken-1" @click="$router.push('/')">
+              <v-btn block color="grey-darken-1" @click="$router.push('/home')">
                 Back to Menu
               </v-btn>
             </v-form>
           </v-card>
         </v-col>
       </v-row>
+      <v-snackbar v-model="snackbarVisible" :timeout="4000" color="success">
+        {{ registrationStatus }}
+      </v-snackbar>
     </v-container>
   </v-app>
 </template>
 
 <script>
 import { registerUser } from '../auth'; // Import register function from auth.js
+import validator from 'validator'; // Import validator.js
 
 export default {
   name: 'RegisterPage',
@@ -85,24 +89,62 @@ export default {
     return {
       email: '',
       password: '',
-      isValid: false,
-      emailRules: [
-        (v) => !!v || 'Email is required',
-        (v) => /.+@.+\..+/.test(v) || 'Please enter a valid email',
-      ],
-      passwordRules: [(v) => !!v || 'Password is required'],
+      registrationStatus: '', // Message to display in the Snackbar
+      snackbarVisible: false, // Controls visibility of the Snackbar
     };
   },
+  computed: {
+    // Form validation rules as computed properties for better separation
+    emailRules() {
+      return [
+        (v) => !!v || 'Email is required',
+        (v) => validator.isEmail(v || '') || 'Please enter a valid email address',
+      ];
+    },
+    passwordRules() {
+      return [
+        (v) => !!v || 'Password is required',
+      ];
+    },
+  },
   methods: {
-    register() {
-      registerUser(this.email, this.password);
+    async register() {
+      this.registrationStatus = ''; // Reset message
+      this.snackbarVisible = false; // Hide Snackbar initially
+
+      // // Check if the form is valid
+      // if (!this.$refs.registerForm.validate()) {
+      //   this.showSnackbar('Please fill out all required fields correctly.');
+      //   return;
+      // }
+
+      // Attempt registration
+      try {
+        await registerUser(this.email, this.password);
+        this.showSnackbar('Registration successful!');
+        //this.$router.push('/welcome'); // Redirect after successful registration
+        // Wait for the snackbar to display, then redirect
+        setTimeout(() => {
+          this.$router.push('/home'); // Redirect after showing the message
+        }, 2000); // Delay of 2 seconds (adjust as needed)
+      } catch (error) {
+        console.error('Registration failed:', error.message);
+        this.showSnackbar(`Registration failed: ${error.message}`);
+      }
     },
     goToLogin() {
-      this.$router.push('/login'); // Navigate to the login page
+    this.$router.push('/login'); // Navigate to the login page
+  },
+    showSnackbar(message) {
+      this.registrationStatus = message;
+      this.snackbarVisible = true;
     },
+    
   },
 };
 </script>
+
+
 
 <style scoped>
 /* Add your custom styling here */

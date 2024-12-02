@@ -15,7 +15,7 @@
                 v-model="email"
                 label="Email"
                 type="email"
-                :rules="[emailRules]"
+                :rules="emailRules"
                 required
                 variant="solo"
                 clearable
@@ -26,7 +26,7 @@
                 v-model="password"
                 label="Password"
                 type="password"
-                :rules="[passwordRules]"
+                :rules="passwordRules"
                 required
                 variant="solo"
                 clearable
@@ -42,8 +42,9 @@
                 block
                 class="mb-4"
               >
-                Login.
+                Login
               </v-btn>
+
               <v-btn
                 color="primary"
                 class="resize-button mb-4"
@@ -55,6 +56,7 @@
                   Don't have an account? Register here.
                 </span>
               </v-btn>
+
               <v-btn block color="grey-darken-1" @click="$router.push('/')">
                 Back to Menu
               </v-btn>
@@ -63,11 +65,23 @@
         </v-col>
       </v-row>
     </v-container>
+
+    <!-- Snackbar for displaying messages -->
+    <v-snackbar
+      v-model="snackbarVisible"
+      :timeout="5000"
+      top
+      color="error"
+      :multi-line="true"
+    >
+      {{ loginStatus }}
+    </v-snackbar>
   </v-app>
 </template>
 
 <script>
 import { loginUser } from '../auth'; // Import login function from auth.js
+import validator from 'validator'; // Import validator.js
 
 export default {
   name: 'LoginPage',
@@ -76,19 +90,42 @@ export default {
       email: '',
       password: '',
       isValid: false,
+      loginStatus: '', // Message to display in the Snackbar
+      snackbarVisible: false, // Controls visibility of the Snackbar
       emailRules: [
-        (v) => !!v || 'Email is required',
-        (v) => /.+@.+\..+/.test(v) || 'Please enter a valid email',
+        (v) => (v && v.trim() !== '') || 'Email is required',
+        (v) =>
+          validator.isEmail(v || '') || 'Please enter a valid email address',
       ],
-      passwordRules: [(v) => !!v || 'Password is required'],
+      passwordRules: [(v) => (v && v.trim() !== '') || 'Password is required'],
     };
   },
   methods: {
-    login() {
-      loginUser(this.email, this.password);
-    },
-    goToRegister() {
-      this.$router.push('/register'); // Navigate to the register page
+    async login() {
+      this.loginStatus = ''; // Reset message
+      this.snackbarVisible = false; // Hide Snackbar initially
+
+      // Validate form before attempting login
+      if (!this.$refs.loginForm.validate()) {
+        this.loginStatus = 'Please fill out all required fields correctly.';
+        this.snackbarVisible = true;
+        return;
+      }
+
+      // Attempt login
+      try {
+        const user = await loginUser(this.email, this.password);
+        this.loginStatus = `Welcome back, ${user.email}!`; // Show success message
+        this.snackbarVisible = true;
+
+        // Wait for the snackbar to display, then redirect
+        setTimeout(() => {
+          this.$router.push('/home'); // Redirect after showing the message
+        }, 2000); // Delay of 2 seconds (adjust as needed)
+      } catch (error) {
+        this.loginStatus = `Login failed: ${error.message}`; // Show error message
+        this.snackbarVisible = true;
+      }
     },
   },
 };

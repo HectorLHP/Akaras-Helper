@@ -30,32 +30,36 @@ const auth = getAuth(appFirebase);
 
 // Register a new user
 export function registerUser(email, password) {
-  createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      console.log('User registered:', userCredential.user);
-    })
-    .catch((error) => {
-      if (error.code === 'auth/email-already-in-use') {
-        console.error('This email is already in use.');
-        alert(
-          'This email is already registered. Please log in or use a different email.'
-        );
-      } else {
-        console.error('Error registering user:', error.message);
-        alert('Registration failed. Please try again.');
-      }
-    });
+  return new Promise((resolve, reject) => {
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        console.log('User registered:', userCredential.user);
+        resolve(userCredential); // Resolve the promise when registration is successful
+      })
+      .catch((error) => {
+        console.error('Error registering user:', error); // Log the whole error object for inspection
+        if (error.code === 'auth/email-already-in-use') {
+          reject(new Error('This email is already registered. Please log in or use a different email.'));
+        } else {
+          reject(new Error(error.message || 'Registration failed. Please try again.'));
+        }
+      });
+  });
 }
+
+
 
 
 // Login an existing user
 export function loginUser(email, password) {
-  signInWithEmailAndPassword(auth, email, password)
+  return signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       console.log('User logged in:', userCredential.user);
+      return userCredential.user; // Resolve with the logged-in user
     })
     .catch((error) => {
       console.error('Error logging in:', error.message);
+      throw new Error(error.message); // Pass the error back to the caller
     });
 }
 

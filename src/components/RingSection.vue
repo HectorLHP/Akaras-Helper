@@ -13,7 +13,7 @@
       <v-row justify="center">
         <v-btn>
 
-          <router-link to="/" class="v-btn v-btn--outlined">
+          <router-link to="/home" class="v-btn v-btn--outlined">
             Back to Menu
           </router-link>
         </v-btn>

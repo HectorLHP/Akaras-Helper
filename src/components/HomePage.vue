@@ -67,18 +67,14 @@
 
 <script>
 export default {
-  name: 'LandingPage',
+  name: 'HomePage',
   methods: {
     goToLogin() {
       this.$router.push('/login'); // Route to login page
     },
     goToRegister() {
       this.$router.push('/register'); // Route to register page
-    },
-    useAsGuest() {
-      console.log('Guest access');
-      // Implement guest access logic (e.g., anonymous authentication)
-    },
+    },    
   },
 };
 </script>
