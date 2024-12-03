@@ -127,6 +127,9 @@ export default {
         this.snackbarVisible = true;
       }
     },
+    goToRegister() {
+    this.$router.push('/register'); // Navigate to the login page
+  },
   },
 };
 </script>

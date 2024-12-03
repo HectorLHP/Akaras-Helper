@@ -86,7 +86,7 @@
           
             <h4>INFO</h4>
             <p>
-              This is just a guide for approximate value, in some cases a 3.5
+              This is just a guide for approximate value, in some cases a 4
               points ring can be exactly what you need, and a 5 points ring can
               be barely usable/sellable
               <!-- Some stats are more important than others and some combinations are not really worth much. A 4 point ring can be very sought after if it has the right stats. For example: 10fcr, 20str, 15dex, 11@ would be very valuable even if it's missing 2 prefixes. 

@@ -3,10 +3,9 @@ import { initializeApp } from 'firebase/app';
 import {
   getAuth,
   createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  signOut,
-  signInAnonymously,
+  signInWithEmailAndPassword,  
   onAuthStateChanged,
+  sendEmailVerification,
 } from 'firebase/auth';
 
 // Get Firebase configuration from environment variables
@@ -19,7 +18,7 @@ const firebaseConfig = {
   appId: import.meta.env.VITE_FIREBASE_APP_ID,
   measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 };
-console.log('Using Firebase API Key:', firebaseConfig.apiKey);
+// console.log('Using Firebase API Key:', firebaseConfig.apiKey);
 
 // Initialize Firebase App (if it hasn't been initialized already)
 const appFirebase = initializeApp(firebaseConfig);
@@ -64,26 +63,26 @@ export function loginUser(email, password) {
 }
 
 // Logout current user
-export function logoutUser() {
-  signOut(auth)
-    .then(() => {
-      console.log('User logged out');
-    })
-    .catch((error) => {
-      console.error('Error logging out:', error.message);
-    });
-}
+// export function logoutUser() {
+//   signOut(auth)
+//     .then(() => {
+//       console.log('User logged out');
+//     })
+//     .catch((error) => {
+//       console.error('Error logging out:', error.message);
+//     });
+// }
 
 // Guest access (anonymous login)
-export function useGuest() {
-  signInAnonymously(auth)
-    .then((userCredential) => {
-      console.log('Guest user logged in:', userCredential.user);
-    })
-    .catch((error) => {
-      console.error('Error with guest login:', error.message);
-    });
-}
+// export function useGuest() {
+//   signInAnonymously(auth)
+//     .then((userCredential) => {
+//       console.log('Guest user logged in:', userCredential.user);
+//     })
+//     .catch((error) => {
+//       console.error('Error with guest login:', error.message);
+//     });
+// }
 
 // Auth state listener
 export function listenAuthState() {
@@ -98,8 +97,6 @@ export function listenAuthState() {
 
 export default {
   registerUser,
-  loginUser,
-  logoutUser,
-  useGuest,
+  loginUser,   
   listenAuthState,
 };

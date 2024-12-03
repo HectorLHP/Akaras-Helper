@@ -3,7 +3,7 @@
     class="mt-11 results-block d-flex justify-center align-center flex-column"
   >
     <vue-speedometer
-      :width="450"
+      :width="420"
       :needleHeightRatio="0.9"
       :value="totalScore"
       :currentValueText="` `"
@@ -59,10 +59,10 @@ const props = defineProps({
 // Segment labels for the speedometer
 const customSegmentLabels = [
   { text: 'Charsi', position: 'INSIDE', color: '#555', fontSize: '12px' },
-  { text: 'Self Use', position: 'INSIDE', color: '#555', fontSize: '11px' },
+  { text: 'Self Use', position: 'INSIDE', color: '#555', fontSize: '10px' },
   { text: 'Good', position: 'INSIDE', color: '#black', fontSize: '12px' },
   { text: 'Great', position: 'INSIDE', color: 'black', fontSize: '12px' },
-  { text: 'Elite', position: 'INSIDE', color: 'orangered', fontSize: '12px' },
+  { text: 'Elite', position: 'INSIDE', color: 'red', fontSize: '12px' },
   { text: 'Trophy', position: 'INSIDE', color: 'blue', fontSize: '12px' },
 ];
 </script>

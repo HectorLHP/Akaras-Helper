@@ -110,19 +110,12 @@ export default {
   methods: {
     async register() {
       this.registrationStatus = ''; // Reset message
-      this.snackbarVisible = false; // Hide Snackbar initially
-
-      // // Check if the form is valid
-      // if (!this.$refs.registerForm.validate()) {
-      //   this.showSnackbar('Please fill out all required fields correctly.');
-      //   return;
-      // }
+      this.snackbarVisible = false; // Hide Snackbar initially  
 
       // Attempt registration
       try {
         await registerUser(this.email, this.password);
-        this.showSnackbar('Registration successful!');
-        //this.$router.push('/welcome'); // Redirect after successful registration
+        this.showSnackbar('Registration successful!');        
         // Wait for the snackbar to display, then redirect
         setTimeout(() => {
           this.$router.push('/home'); // Redirect after showing the message
