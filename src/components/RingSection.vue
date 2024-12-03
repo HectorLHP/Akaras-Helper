@@ -11,12 +11,7 @@
       </v-row> -->
       <!-- Back to Landing Page Button -->
       <v-row justify="center">
-        <v-btn>
-
-          <router-link to="/home" class="v-btn v-btn--outlined">
-            Back to Menu
-          </router-link>
-        </v-btn>
+        
       </v-row>
 
       <!-- Dropdown for Ring Type -->
@@ -272,5 +267,6 @@ h3 {
   color: rgb(169, 176, 171);
   margin-top: 0px;
 }
+
 
 </style>

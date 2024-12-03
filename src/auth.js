@@ -26,7 +26,7 @@ const appFirebase = initializeApp(firebaseConfig);
 
 
 // Get Firebase authentication instance
-const auth = getAuth(appFirebase);
+export const auth = getAuth(appFirebase);
 
 // Register a new user
 export function registerUser(email, password) {
