@@ -1,14 +1,17 @@
 <template>
   <v-app>
-    <v-app-bar app class="nav-bar" color="black">
+    <v-app-bar
+      :elevation="20"
+      app
+      scroll-behavior="hide"
+      scroll-threshold="10"
+      class="nav-bar"
+      color="black"
+    >
+      <v-btn color="secondary" @click="$router.push('/')"> Home </v-btn>
       <v-toolbar-title>Akara's Helper</v-toolbar-title>
 
       <v-spacer></v-spacer>
-      <v-btn>
-        <router-link to="/home" class="v-btn v-btn--outlined">
-          Back to Menu
-        </router-link>
-      </v-btn>
       <!-- Welcome message visible only when user is logged in -->
       <v-btn v-if="user" text color="secondary" large outlined>
         Welcome, {{ user.displayName || 'User' }}

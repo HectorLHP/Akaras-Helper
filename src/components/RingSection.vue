@@ -9,15 +9,13 @@
           class="title-image"
         />
       </v-row> -->
-      <!-- Back to Landing Page Button -->
-      <v-row justify="center">
-        
-      </v-row>
+     
+     
 
       <!-- Dropdown for Ring Type -->
 
       <v-row id="ring-type-row">
-        <v-col cols="12" class="d-flex flex-row">
+        <v-col cols="12" class="d-flex flex-row mt-12">
           <v-select
             v-model="selectedRingType"
             :items="ringTypes"

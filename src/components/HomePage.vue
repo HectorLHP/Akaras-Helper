@@ -1,18 +1,10 @@
 <template>
   <v-app id="app">
-    <v-container class="d-flex flex-column justify-center align-center" fluid>
-      <!-- Main header -->
-      <v-row class="mb-5">
-        <v-col cols="12" class="text-center">
-          <h1 class="display-2">
-            Welcome to the Diablo 2 Item Value Calculator
-          </h1>
-        </v-col>
-      </v-row>
+    <v-container class="d-flex flex-column justify-center align-center" fluid>      
 
       <!-- Buttons to navigate to other pages -->
-      <v-row class="d-flex align-center justify-center">
-        <v-col cols="12" class="d-flex flex-column">
+      <v-row class="mt-16">
+        <v-col class="d-flex flex-column">
           <v-btn
             @click="$router.push('/rings')"
             color="primary"
@@ -20,7 +12,7 @@
             large
             outlined
           >
-            Rings
+            Ring Value Calculator
           </v-btn>
 
           <v-btn
@@ -30,7 +22,7 @@
             large
             outlined
           >
-            <span style="white-space: normal"> Amulets (soon) </span>
+            <span style="white-space: normal"> Amulet Value Calculator (soon) </span>
           </v-btn>
         </v-col>
       </v-row>
