@@ -37,6 +37,16 @@
       </v-btn>
     </v-app-bar>
 
+    <!-- Feedback Button -->
+    <div class="feedback-button-wrapper">
+      <v-btn
+        @click="triggerSurvey"
+        class="feedback-button"
+      >
+        Give Feedback
+      </v-btn>
+    </div>
+    
     <div>
       <v-container fluid>
         <router-view />
@@ -48,6 +58,8 @@
 <script>
 import { auth } from './auth'; // Ensure the path is correct
 import { onAuthStateChanged } from 'firebase/auth'; // Import from Firebase directly
+
+import posthog from 'posthog-js';
 
 export default {
   data() {
@@ -65,6 +77,28 @@ export default {
     goToRegister() {
       this.$router.push('/register'); // Route to the register page
     },
+    triggerSurvey() {
+      const apiKey = import.meta.env.VITE_POSTHOG_API_KEY;
+      const surveyId = import.meta.env.VITE_POSTHOG_SURVEY_ID;
+
+      fetch('https://us.i.posthog.com/api/surveys/show/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': apiKey,
+        },
+        body: JSON.stringify({
+          survey_id: surveyId,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log('Survey shown:', data);
+        })
+        .catch((error) => {
+          console.error('Error showing survey:', error);
+        });
+    },
   },
   created() {
     onAuthStateChanged(auth, (user) => {
@@ -80,7 +114,6 @@ export default {
 /* Make the Vuetify app layout transparent */
 
 .nav-bar {
-  /* background-image: url('/images/background3.png') !important; */
   background-size: cover !important;
   background-position: center !important;
   background-repeat: no-repeat !important;
@@ -93,5 +126,20 @@ export default {
 }
 .v-container {
   padding: 0 !important; /* Remove the default padding */
+}
+/* Position the feedback button at the bottom right */
+/* Wrapper for the feedback button */
+.feedback-button-wrapper {
+  position: fixed;
+  bottom: 20px; /* Distance from the bottom of the screen */
+  right: 20px;  /* Distance from the right of the screen */
+  z-index: 9999;
+}
+
+/* Style the button */
+.feedback-button {
+  width: auto;  /* Ensures button does not stretch */
+  padding: 10px 20px;  /* Adjust padding if necessary */
+  height: auto;  /* Ensures height is appropriate */
 }
 </style>

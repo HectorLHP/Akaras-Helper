@@ -10,7 +10,7 @@ export default defineConfig({
     vuetify({ autoImport: true }), // Enable Vuetify auto-import
   ],
   server: {
-    port: 3000,
+    port: 8000,
   },
   resolve: {
     alias: {

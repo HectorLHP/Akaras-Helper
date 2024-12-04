@@ -2,21 +2,31 @@
 import { createApp } from 'vue';
 import App from './App.vue';
 import router from './router';
-import vuetify from './plugins/vuetify'; // Set up Vuetify
-import 'vuetify/styles'; // Import Vuetify styles
+import vuetify from './plugins/vuetify'; // Vuetify
+import 'vuetify/styles'; // Vuetify styles
 
-// Import authentication logic
 import auth from './auth';
+import posthog from 'posthog-js';
 
-// Initialize the app
+// Initialize PostHog
+posthog.init('phc_RybCEvUVi4UsYkFzuFEaqcWZf437LN4AJt7upjfPOCO', {
+  api_host: 'https://us.i.posthog.com',
+  person_profiles: 'always',
+  capture_pageview: true,
+});
+
+router.afterEach((to) => {
+  posthog.capture('$pageview', { path: to.path });
+});
+
 const app = createApp(App);
 
-// Use Vue Router and Vuetify
+// Use Router, Vuetify, and PostHog
 app.use(router);
 app.use(vuetify);
 
 // Start listening for auth state changes
 auth.listenAuthState();
 
-// Mount the app
+// Mount the app to the DOM
 app.mount('#app');
