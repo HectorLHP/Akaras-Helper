@@ -62,24 +62,28 @@ export default {
     },
     submitFeedback() {
       if (this.$refs.feedbackForm.validate()) {
-        console.log('Feedback submitted:', this.feedback);
+        // Clone feedback to avoid overwriting
+        const feedbackToSubmit = { ...this.feedback };
 
+       
         // Track the feedback submission in PostHog
         posthog.capture('feedback_submitted', {
-          feedback_message: this.feedback.message,
-          feedback_type: this.feedback.type,
+          feedback_message: feedbackToSubmit.message,
+          feedback_type: feedbackToSubmit.type,
           user_id: this.$root.user ? this.$root.user.uid : 'guest',
           page_url: window.location.href,
+          timestamp: new Date().toISOString(), // Unique identifier
         });
+    
 
         // Notify the user of successful submission
         alert('Thank you for your feedback!');
 
-        // Close the dialog and reset form
-        this.$nextTick(() => {
+        // Close the dialog and reset the form with a delay to ensure capture completion
+        setTimeout(() => {
           this.dialog = false;
           this.resetForm();
-        });
+        }, 500); // 500ms delay
       } else {
         alert('Please fill in all required fields.');
       }
