@@ -12,6 +12,7 @@
       <v-toolbar-title>Akara's Helper</v-toolbar-title>
 
       <v-spacer></v-spacer>
+
       <!-- Welcome message visible only when user is logged in -->
       <v-btn v-if="user" text color="secondary" large outlined>
         Welcome, {{ user.displayName || 'User' }}
@@ -21,13 +22,7 @@
       <v-btn v-if="!user" @click="goToLogin" color="secondary" large outlined>
         Login
       </v-btn>
-      <v-btn
-        v-if="!user"
-        @click="goToRegister"
-        color="secondary"
-        large
-        outlined
-      >
+      <v-btn v-if="!user" @click="goToRegister" color="secondary" large outlined>
         Register
       </v-btn>
 
@@ -38,15 +33,13 @@
     </v-app-bar>
 
     <!-- Feedback Button -->
+    <feedback-form ref="feedbackForm" />
     <div class="feedback-button-wrapper">
-      <v-btn
-        @click="triggerSurvey"
-        class="feedback-button"
-      >
+      <v-btn @click="openFeedbackForm" class="feedback-button">
         Give Feedback
       </v-btn>
     </div>
-    
+
     <div>
       <v-container fluid>
         <router-view />
@@ -58,10 +51,13 @@
 <script>
 import { auth } from './auth'; // Ensure the path is correct
 import { onAuthStateChanged } from 'firebase/auth'; // Import from Firebase directly
+import FeedbackForm from './components/FeedbackForm.vue'; // Import the feedback form
 
+// Import PostHog to track events
 import posthog from 'posthog-js';
 
 export default {
+  components: { FeedbackForm }, // Register the feedback form component
   data() {
     return {
       user: null, // Store user info here
@@ -77,18 +73,15 @@ export default {
     goToRegister() {
       this.$router.push('/register'); // Route to the register page
     },
-    triggerSurvey() {
-      posthog.getSurveys().then((surveys) => {
-        const survey = surveys.find((s) => s.name === 'Feedback Survey 1');
-        if (survey) {
-          posthog.renderSurvey(survey.id);
-        } else {
-          console.error('Survey not found');
-        }
+    openFeedbackForm() {
+      this.$refs.feedbackForm.openDialog(); // Open the feedback form dialog
+      posthog.capture('feedback_form_opened', { // Track when the feedback form is opened
+        userId: this.user ? this.user.uid : 'guest',
       });
     },
   },
   created() {
+    // Handle user authentication state
     onAuthStateChanged(auth, (user) => {
       this.user = user;
     });
@@ -98,9 +91,6 @@ export default {
 
 <style>
 /* Apply background styling directly to the wrapper element */
-
-/* Make the Vuetify app layout transparent */
-
 .nav-bar {
   background-size: cover !important;
   background-position: center !important;
@@ -112,11 +102,12 @@ export default {
   background-color: transparent;
   box-shadow: none;
 }
+
 .v-container {
   padding: 0 !important; /* Remove the default padding */
 }
+
 /* Position the feedback button at the bottom right */
-/* Wrapper for the feedback button */
 .feedback-button-wrapper {
   position: fixed;
   bottom: 20px; /* Distance from the bottom of the screen */
