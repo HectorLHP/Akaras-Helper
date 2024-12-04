@@ -78,26 +78,14 @@ export default {
       this.$router.push('/register'); // Route to the register page
     },
     triggerSurvey() {
-      const apiKey = import.meta.env.VITE_POSTHOG_API_KEY;
-      const surveyId = import.meta.env.VITE_POSTHOG_SURVEY_ID;
-
-      fetch('https://us.i.posthog.com/api/surveys/show/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': apiKey,
-        },
-        body: JSON.stringify({
-          survey_id: surveyId,
-        }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log('Survey shown:', data);
-        })
-        .catch((error) => {
-          console.error('Error showing survey:', error);
-        });
+      posthog.getSurveys().then((surveys) => {
+        const survey = surveys.find((s) => s.name === 'Feedback Survey 1');
+        if (survey) {
+          posthog.renderSurvey(survey.id);
+        } else {
+          console.error('Survey not found');
+        }
+      });
     },
   },
   created() {
