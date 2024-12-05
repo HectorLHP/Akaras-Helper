@@ -41,7 +41,11 @@
     </div>
 
     <!-- Contact Us Text -->
-    <div class="contact-text">Contact us at akarashelper@gmail.com</div>
+    <div class="contact-text">Contact us at Akarashelper@gmail.com</div>
+    <footer>
+  <a class="privacy" href="/privacy-policy">Privacy Policy</a> | <a class="tos" href="/terms-and-conditions">Terms of Service</a>
+</footer>
+
 
     <v-container fluid>
       <router-view />
@@ -121,10 +125,31 @@ export default {
 
 /* Contact Us Text */
 .contact-text {
-  position: fixed;
+  position: absolute;
   bottom: 5px;
   left: 50%;
   transform: translateX(-50%);
+  font-size: 16px;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.8); 
+  text-align: center;
+  padding: 10px;
+  border-radius: 5px;
+}
+.privacy {
+  position: absolute;
+  bottom: 5px;
+  left: 20px;
+  font-size: 16px;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  border-radius: 5px;
+}
+.tos {
+  position: absolute;
+  bottom: 5px;
+  left: 150px;
   font-size: 16px;
   color: white;
   text-align: center;

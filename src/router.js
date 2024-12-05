@@ -3,6 +3,8 @@ import HomePage from './components/HomePage.vue';
 import RingSection from './components/RingSection.vue';
 import LoginPage from './components/LoginPage.vue'; // Add LoginPage import
 import RegisterPage from './components/RegisterPage.vue'; // Add RegisterPage import
+import TermsConditions from './components/TermsConditions.vue';
+import PrivacyPolicy from './components/PrivacyPolicy.vue';
 
 const routes = [
   {
@@ -18,6 +20,8 @@ const routes = [
   { path: '/rings', component: RingSection },
   { path: '/login', component: LoginPage }, // Define route for login
   { path: '/register', component: RegisterPage }, // Define route for register
+  { path: '/terms-and-conditions', component: TermsConditions },
+  { path: '/privacy-policy', component: PrivacyPolicy },
 ];
 
 const router = createRouter({

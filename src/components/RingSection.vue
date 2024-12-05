@@ -1,8 +1,7 @@
 <template>
   <v-app id="ringApp">
     <v-container id="container" class="d-flex flex-column justify-center" fluid>
-      
-           <!-- Dropdown for Ring Type -->
+      <!-- Dropdown for Ring Type -->
 
       <v-row id="ring-type-row">
         <v-col cols="12" class="d-flex flex-row mt-12">
@@ -68,12 +67,8 @@
         />
 
         <!-- INSTRUCTIONS -->
-        <v-col
-        
-        class="d-flex flex-column justify-center mt-10 ml-4"
-        >
-        <v-sheet class="bg-grey-darken-2 pa-6" rounded>
-          
+        <v-col class="d-flex flex-column justify-center mt-10 ml-4">
+          <v-sheet class="bg-grey-darken-2 pa-6" rounded>
             <h4>INFO</h4>
             <p>
               This is just a guide for approximate value, in some cases a 4
@@ -93,8 +88,7 @@
               <li><strong>5.5 Points:</strong> Elite. Very valuable.</li>
               <li><strong>6 Points:</strong> Top-tier, trophy item.</li>
             </ul>
-          
-        </v-sheet>
+          </v-sheet>
         </v-col>
       </v-row>
     </v-container>
@@ -134,7 +128,7 @@ const itemStats = reactive({
 const totalScore = ref(0);
 
 // Ring types for dropdown
-const ringTypes = ['Rare Ring', /*'Blood Ring', 'Caster Ring'*/ ];
+const ringTypes = ['Rare Ring' /*'Blood Ring', 'Caster Ring'*/];
 const selectedRingType = ref('Rare Ring'); // Default type
 
 // Display names for the stats
@@ -239,6 +233,4 @@ h3 {
 .input-columns {
   max-width: 400px;
 }
-
-
 </style>
