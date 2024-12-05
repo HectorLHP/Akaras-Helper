@@ -13,6 +13,9 @@
 
       <v-spacer></v-spacer>
 
+      <!-- Donate Button (Triggers the modal) -->
+      <v-btn color="primary" @click="showModal = true">Donate</v-btn>
+
       <!-- Conditional Buttons based on Authentication -->
       <template v-if="user">
         <v-btn text color="secondary" large outlined>
@@ -32,6 +35,28 @@
       </template>
     </v-app-bar>
 
+    <!-- PayPal Donation Modal -->
+    <v-dialog v-model="showModal" max-width="500px">
+      <v-card>
+        <v-card-title class="headline">Support Our Project</v-card-title>
+        <v-card-text>
+          <p>Thank you for considering a donation! You can donate via PayPal using the link below:</p>
+          <v-btn
+            color="primary"
+            :href="paypalLink"
+            target="_blank"
+            block
+            class="mt-4"
+          >
+            Donate via PayPal
+          </v-btn>
+        </v-card-text>
+        <v-card-actions>
+          <v-btn text @click="showModal = false">Close</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
     <!-- Feedback Button -->
     <feedback-form ref="feedbackForm" />
     <div class="feedback-button-wrapper">
@@ -43,9 +68,8 @@
     <!-- Contact Us Text -->
     <div class="contact-text">Contact us at Akarashelper@gmail.com</div>
     <footer>
-  <a class="privacy" href="/privacy-policy">Privacy Policy</a> | <a class="tos" href="/terms-and-conditions">Terms of Service</a>
-</footer>
-
+      <a class="privacy" href="/privacy-policy">Privacy Policy</a> | <a class="tos" href="/terms-and-conditions">Terms of Service</a>
+    </footer>
 
     <v-container fluid>
       <router-view />
@@ -65,6 +89,8 @@ export default {
     return {
       user: null, // Holds user object
       userEmail: null, // Holds user email
+      showModal: false, // Controls visibility of the modal
+      paypalLink: "https://www.paypal.com/donate/?hosted_button_id=NMP34339FZV9J", // Your PayPal donation link
     };
   },
   methods: {
@@ -136,6 +162,7 @@ export default {
   padding: 10px;
   border-radius: 5px;
 }
+
 .privacy {
   position: absolute;
   bottom: 5px;
@@ -146,6 +173,7 @@ export default {
   padding: 10px;
   border-radius: 5px;
 }
+
 .tos {
   position: absolute;
   bottom: 5px;
@@ -155,5 +183,9 @@ export default {
   text-align: center;
   padding: 10px;
   border-radius: 5px;
+}
+
+.v-dialog .v-card {
+  padding: 20px;
 }
 </style>
