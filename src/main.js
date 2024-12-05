@@ -15,6 +15,9 @@ posthog.init(import.meta.env.VITE_POSTHOG_API_KEY, {
   capture_pageview: true,
 });
 
+// Capture pageview event globally
+posthog.capture('$pageview', { path: window.location.pathname });
+
 // router.afterEach((to) => {
 //   posthog.capture('$pageview', { path: to.path });
 // });
