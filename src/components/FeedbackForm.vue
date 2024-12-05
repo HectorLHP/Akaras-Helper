@@ -3,7 +3,7 @@
     <v-card>
       <v-card-title class="headline">Submit Feedback</v-card-title>
       <v-card-text>
-        <v-form ref="feedbackForm" v-model="valid">
+        <v-form ref="feedbackForm">
           <v-textarea
             v-model="feedback.message"
             label="Your Feedback"
@@ -13,7 +13,7 @@
           ></v-textarea>
           <v-select
             v-model="feedback.type"
-            :items="['Bug Report', 'Feature Request', 'Other']"
+            :items="feedbackTypes"
             label="Type"
             :rules="[rules.required]"
             outlined
@@ -21,7 +21,11 @@
         </v-form>
       </v-card-text>
       <v-card-actions>
-        <v-btn color="primary" @click="submitFeedback" :disabled="!valid">
+        <v-btn
+          color="primary"
+          @click="submitFeedback"
+          :disabled="!feedback.message || !feedback.type"
+        >
           Submit
         </v-btn>
         <v-btn text @click="closeDialog">Cancel</v-btn>
@@ -37,7 +41,6 @@ export default {
   data() {
     return {
       dialog: false,
-      valid: false,
       feedback: {
         message: '',
         type: '',
@@ -45,6 +48,7 @@ export default {
       rules: {
         required: (v) => !!v || 'This field is required.',
       },
+      feedbackTypes: ['Bug Report', 'Feature Request', 'Other'],
     };
   },
   methods: {
@@ -56,34 +60,25 @@ export default {
       this.resetForm();
     },
     resetForm() {
-      this.feedback.message = '';
-      this.feedback.type = '';
-      this.$refs.feedbackForm.resetValidation();
+      this.feedback = { message: '', type: '' };
+      if (this.$refs.feedbackForm) {
+        this.$refs.feedbackForm.resetValidation();
+      }
     },
     submitFeedback() {
       if (this.$refs.feedbackForm.validate()) {
-        // Clone feedback to avoid overwriting
-        const feedbackToSubmit = { ...this.feedback };
-
-       
-        // Track the feedback submission in PostHog
+        // Track feedback submission only here
         posthog.capture('feedback_submitted', {
-          feedback_message: feedbackToSubmit.message,
-          feedback_type: feedbackToSubmit.type,
+          feedback_message: this.feedback.message,
+          feedback_type: this.feedback.type,
           user_id: this.$root.user ? this.$root.user.uid : 'guest',
           page_url: window.location.href,
-          timestamp: new Date().toISOString(), // Unique identifier
+          timestamp: new Date().toISOString(),
         });
-    
 
-        // Notify the user of successful submission
+        // Notify and reset form after submission
         alert('Thank you for your feedback!');
-
-        // Close the dialog and reset the form with a delay to ensure capture completion
-        setTimeout(() => {
-          this.dialog = false;
-          this.resetForm();
-        }, 500); // 500ms delay
+        this.closeDialog();
       } else {
         alert('Please fill in all required fields.');
       }

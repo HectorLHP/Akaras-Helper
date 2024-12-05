@@ -3,7 +3,7 @@ import { initializeApp } from 'firebase/app';
 import {
   getAuth,
   createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,  
+  signInWithEmailAndPassword,
   onAuthStateChanged,
   sendEmailVerification,
 } from 'firebase/auth';
@@ -23,7 +23,6 @@ const firebaseConfig = {
 // Initialize Firebase App (if it hasn't been initialized already)
 const appFirebase = initializeApp(firebaseConfig);
 
-
 // Get Firebase authentication instance
 export const auth = getAuth(appFirebase);
 
@@ -38,16 +37,19 @@ export function registerUser(email, password) {
       .catch((error) => {
         console.error('Error registering user:', error); // Log the whole error object for inspection
         if (error.code === 'auth/email-already-in-use') {
-          reject(new Error('This email is already registered. Please log in or use a different email.'));
+          reject(
+            new Error(
+              'This email is already registered. Please log in or use a different email.'
+            )
+          );
         } else {
-          reject(new Error(error.message || 'Registration failed. Please try again.'));
+          reject(
+            new Error(error.message || 'Registration failed. Please try again.')
+          );
         }
       });
   });
 }
-
-
-
 
 // Login an existing user
 export function loginUser(email, password) {
@@ -62,28 +64,6 @@ export function loginUser(email, password) {
     });
 }
 
-// Logout current user
-// export function logoutUser() {
-//   signOut(auth)
-//     .then(() => {
-//       console.log('User logged out');
-//     })
-//     .catch((error) => {
-//       console.error('Error logging out:', error.message);
-//     });
-// }
-
-// Guest access (anonymous login)
-// export function useGuest() {
-//   signInAnonymously(auth)
-//     .then((userCredential) => {
-//       console.log('Guest user logged in:', userCredential.user);
-//     })
-//     .catch((error) => {
-//       console.error('Error with guest login:', error.message);
-//     });
-// }
-
 // Auth state listener
 export function listenAuthState() {
   onAuthStateChanged(auth, (user) => {
@@ -97,6 +77,6 @@ export function listenAuthState() {
 
 export default {
   registerUser,
-  loginUser,   
+  loginUser,
   listenAuthState,
 };

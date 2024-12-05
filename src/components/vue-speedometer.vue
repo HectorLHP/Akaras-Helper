@@ -80,15 +80,13 @@ const customSegmentLabels = [
 
 .item-value-text {
   font: bold 30px papyrus;
-  color: rgb(169, 176, 171);
+  color: rgb(246, 250, 247);
+ text-shadow: 4px 4px 3px rgba(0, 0, 0, 1); /* Shadow effect */
 }
 
 .vue-speedometer {
   height: 250px;
+  
 }
 
-/* .speedometer {
-  width: 100%;
-  height: 50vh; 
-} */
 </style>

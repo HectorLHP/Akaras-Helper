@@ -64,9 +64,9 @@ export function calculateItemValue(itemStats) {
 
   const totalScore = prefixScore + suffixScore;
 
-  console.log('Prefix Score:', prefixScore);
-  console.log('Suffix Score:', suffixScore);
-  console.log('Total Score:', totalScore);
+  // console.log('Prefix Score:', prefixScore);
+  // console.log('Suffix Score:', suffixScore);
+  // console.log('Total Score:', totalScore);
 
   return totalScore; // Return combined score
 }

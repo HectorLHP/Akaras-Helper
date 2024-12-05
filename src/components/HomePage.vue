@@ -1,7 +1,6 @@
 <template>
-  <v-app id="app">
-    <v-container class="d-flex flex-column justify-center align-center" fluid>      
-
+  <v-app id="homepage">
+    <v-container class="d-flex flex-column justify-center align-center" fluid>
       <!-- Buttons to navigate to other pages -->
       <v-row class="mt-16">
         <v-col class="d-flex flex-column">
@@ -16,13 +15,13 @@
           </v-btn>
 
           <v-btn
-            @click="$router.push('/')"
+            :disabled="true"
             color="primary"
-            class="mb-2"
+            class="mb-2 disabled-btn"
             large
             outlined
           >
-            <span style="white-space: normal"> Amulet Value Calculator (soon) </span>
+            Amulet Value Calculator (coming soon)
           </v-btn>
         </v-col>
       </v-row>
@@ -30,23 +29,20 @@
   </v-app>
 </template>
 
-<script></script>
-
 <style scoped>
-/* You can still add custom styling here if needed */
-
-#app {
-  background-image: url('/images/background2.png'); /* Update the path if necessary */
+#homepage {
+  background-image: url('/images/background2.png'); /* Ensure path is correct */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  min-height: 100vh; /* Ensure it covers the full viewport height */
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 20px;
 }
+
 .landing-page {
   text-align: center;
   margin-top: 50px;
@@ -54,5 +50,10 @@
 
 h1 {
   color: #ffcc00; /* Diablo-themed color */
+}
+
+.disabled-btn {
+  white-space: normal; /* Prevent text from overflowing */
+  cursor: not-allowed; /* Indicate disabled state */
 }
 </style>

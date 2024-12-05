@@ -1,18 +1,8 @@
 <template>
   <v-app id="ringApp">
     <v-container id="container" class="d-flex flex-column justify-center" fluid>
-      <!-- Title -->
-      <!-- <v-row id="title-row" justify="center">
-        <img
-          src="/images/RingsBanner2.png"
-          alt="Rare Rings"
-          class="title-image"
-        />
-      </v-row> -->
-     
-     
-
-      <!-- Dropdown for Ring Type -->
+      
+           <!-- Dropdown for Ring Type -->
 
       <v-row id="ring-type-row">
         <v-col cols="12" class="d-flex flex-row mt-12">
@@ -89,8 +79,6 @@
               This is just a guide for approximate value, in some cases a 4
               points ring can be exactly what you need, and a 5 points ring can
               be barely usable/sellable
-              <!-- Some stats are more important than others and some combinations are not really worth much. A 4 point ring can be very sought after if it has the right stats. For example: 10fcr, 20str, 15dex, 11@ would be very valuable even if it's missing 2 prefixes. 
-              And a 5 points ring could be barely usable/sellable. For example: 10fcr, 6ml, 9min dmg, 60mana, 30psn res, could be hard to sell since melee characters  -->
             </p>
             <ul>
               <li>
@@ -146,7 +134,7 @@ const itemStats = reactive({
 const totalScore = ref(0);
 
 // Ring types for dropdown
-const ringTypes = ['Rare Ring', 'Blood Ring', 'Caster Ring'];
+const ringTypes = ['Rare Ring', /*'Blood Ring', 'Caster Ring'*/ ];
 const selectedRingType = ref('Rare Ring'); // Default type
 
 // Display names for the stats
@@ -243,14 +231,6 @@ h3 {
   color: rgb(232, 222, 222);
 }
 
-/* Ensure higher specificity for hint messages */
-
-/* .stat-input >>> .v-messages__message {
-  color: #b01a1a !important;
-  font-size: 14px;
-  font-style: italic; 
-} */
-
 .stat-input {
   height: 50px;
   margin-bottom: 10px;
@@ -258,12 +238,6 @@ h3 {
 
 .input-columns {
   max-width: 400px;
-}
-
-.item-value-text {
-  font: bold 30px papyrus;
-  color: rgb(169, 176, 171);
-  margin-top: 0px;
 }
 
 
