@@ -14,7 +14,7 @@
       <v-spacer></v-spacer>
 
       <!-- Donate Button (Triggers the modal) -->
-      <v-btn color="primary" @click="showModal = true">Donate</v-btn>
+      <v-btn color="primary" @click="showModal = true">Buy me a coffee</v-btn>
 
       <!-- Conditional Buttons based on Authentication -->
       <template v-if="user">
